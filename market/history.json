@@ -1,47 +1,47 @@
 [
   {
-    "collectedAt": "2026-09-21T19:26:33.121Z",
+    "collectedAt": "2026-09-21T19:28:52.728Z",
     "date": "20260922",
     "items": {
       "lettuce-green": {
         "name": "청상추",
         "rows": [],
-        "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+        "format": "xml"
       },
       "cucumber": {
         "name": "취청오이",
         "rows": [],
-        "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+        "format": "xml"
       },
       "carrot": {
         "name": "당근 수입",
         "rows": [],
-        "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+        "format": "xml"
       },
       "iceberg": {
         "name": "양상추(일반)",
         "rows": [],
-        "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+        "format": "xml"
       },
       "red-cabbage": {
         "name": "빨간 양배추",
         "rows": [],
-        "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+        "format": "xml"
       },
       "chili": {
         "name": "청양고추",
         "rows": [],
-        "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+        "format": "xml"
       },
       "perilla": {
         "name": "깻잎",
         "rows": [],
-        "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+        "format": "xml"
       },
       "green-onion": {
         "name": "대파(일반)",
         "rows": [],
-        "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+        "format": "xml"
       }
     }
   }
