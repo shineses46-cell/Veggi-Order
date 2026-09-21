@@ -1,46 +1,54 @@
 {
-  "collectedAt": "2026-09-21T19:28:52.728Z",
+  "collectedAt": "2026-09-21T19:30:36.035Z",
   "date": "20260922",
   "items": {
     "lettuce-green": {
       "name": "청상추",
       "rows": [],
-      "format": "xml"
+      "format": "xml",
+      "preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <response> <resultCode>ERROR_LIMIT_EXCEEDED</resultCode> <message>일일 조회 건수가 10000회가 초과되었습니다.</message> </response>"
     },
     "cucumber": {
       "name": "취청오이",
       "rows": [],
-      "format": "xml"
+      "format": "xml",
+      "preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <response> <resultCode>ERROR_LIMIT_EXCEEDED</resultCode> <message>일일 조회 건수가 10000회가 초과되었습니다.</message> </response>"
     },
     "carrot": {
       "name": "당근 수입",
       "rows": [],
-      "format": "xml"
+      "format": "xml",
+      "preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <response> <resultCode>ERROR_LIMIT_EXCEEDED</resultCode> <message>일일 조회 건수가 10000회가 초과되었습니다.</message> </response>"
     },
     "iceberg": {
       "name": "양상추(일반)",
       "rows": [],
-      "format": "xml"
+      "format": "xml",
+      "preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <response> <resultCode>ERROR_LIMIT_EXCEEDED</resultCode> <message>일일 조회 건수가 10000회가 초과되었습니다.</message> </response>"
     },
     "red-cabbage": {
       "name": "빨간 양배추",
       "rows": [],
-      "format": "xml"
+      "format": "xml",
+      "preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <response> <resultCode>ERROR_LIMIT_EXCEEDED</resultCode> <message>일일 조회 건수가 10000회가 초과되었습니다.</message> </response>"
     },
     "chili": {
       "name": "청양고추",
       "rows": [],
-      "format": "xml"
+      "format": "xml",
+      "preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <response> <resultCode>ERROR_LIMIT_EXCEEDED</resultCode> <message>일일 조회 건수가 10000회가 초과되었습니다.</message> </response>"
     },
     "perilla": {
       "name": "깻잎",
       "rows": [],
-      "format": "xml"
+      "format": "xml",
+      "preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <response> <resultCode>ERROR_LIMIT_EXCEEDED</resultCode> <message>일일 조회 건수가 10000회가 초과되었습니다.</message> </response>"
     },
     "green-onion": {
       "name": "대파(일반)",
       "rows": [],
-      "format": "xml"
+      "format": "xml",
+      "preview": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <response> <resultCode>ERROR_LIMIT_EXCEEDED</resultCode> <message>일일 조회 건수가 10000회가 초과되었습니다.</message> </response>"
     }
   }
 }
