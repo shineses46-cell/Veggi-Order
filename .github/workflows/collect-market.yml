@@ -1,13 +1,17 @@
 name: Collect Garak market prices
 
+
 on:
   workflow_dispatch:
   schedule:
     # 매일 한국시간 오전 6시 17분
-    - cron: "17 21 * * *"
+    - cron: "17 21 * * *"→ Runs at 21:17
+
+
 
 permissions:
   contents: write
+
 
 jobs:
   collect:
@@ -20,7 +24,7 @@ jobs:
           GARAK_API_PASSWORD: ${{ secrets.GARAK_API_PASSWORD }}
         run: |
           node - <<'NODE'
-          const fs = require('fs');
+          import fs from 'node:fs';
           const items = {
             'lettuce-green': '청상추', cucumber: '취청오이', carrot: '당근 수입',
             iceberg: '양상추(일반)', 'red-cabbage': '빨간 양배추', chili: '청양고추',
@@ -34,37 +38,3 @@ jobs:
           };
           const date = dateForKorea();
           const previous = dateForKorea(-1);
-          const weekBefore = dateForKorea(-7);
-          const snapshot = { collectedAt: new Date().toISOString(), date, items: {} };
-          for (const [key, name] of Object.entries(items)) {
-            const q = new URLSearchParams({
-              id: process.env.GARAK_API_ID, passwd: process.env.GARAK_API_PASSWORD,
-              dataid: 'data36', pagesize: '50', pageidx: '1', 'portal.templet': 'false',
-              s_date: date, s_date_p: previous, s_date_p7: weekBefore,
-              p_pos_gubun: '1', s_pum_nm: '2', s_pummok: name
-            });
-            try {
-              const response = await fetch('https://www.garak.co.kr/homepage/publicdata/dataJsonOpen.do?' + q);
-              if (!response.ok) throw new Error('HTTP ' + response.status);
-              const body = await response.json();
-              snapshot.items[key] = { name, rows: body.resultData || [] };
-            } catch (error) {
-              snapshot.items[key] = { name, rows: [], error: String(error.message || error) };
-            }
-          }
-          fs.mkdirSync('market', { recursive: true });
-          fs.writeFileSync('market/latest.json', JSON.stringify(snapshot, null, 2));
-          let history = [];
-          try { history = JSON.parse(fs.readFileSync('market/history.json', 'utf8')); } catch {}
-          history = Array.isArray(history) ? history.filter(x => x.date !== date) : [];
-          history.push(snapshot);
-          history = history.slice(-45);
-          fs.writeFileSync('market/history.json', JSON.stringify(history, null, 2));
-          NODE
-      - name: Save snapshots
-        run: |
-          git config user.name "veggi-order-bot"
-          git config user.email "veggi-order-bot@users.noreply.github.com"
-          git add market/latest.json market/history.json
-          git diff --cached --quiet || git commit -m "Update market snapshot"
-          git push
