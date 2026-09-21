@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#167a52">
+  <title>Veggi Order · 베지 오더</title>
+  <link rel="stylesheet" href="styles.css?v=33">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="app-header">
+      <div><p class="eyebrow">VEGETABLE STOCK &amp; MARKET</p><h1>Veggi Order <span>베지 오더</span></h1><p>재고·발주·가락시장 시세를 한곳에서 확인해요.</p></div>
+      <time id="todayLabel"></time>
+    </header>
+    <section class="view active" id="inventoryView"></section>
+    <section class="view" id="ordersView"></section>
+    <section class="view" id="marketView"></section>
+    <section class="view" id="historyView"></section>
+    <section class="view" id="settingsView"></section>
+  </main>
+  <nav class="bottom-nav" aria-label="주요 메뉴">
+    <button data-view="inventoryView" class="active"><b>▦</b>재고</button><button data-view="ordersView"><b>▤</b>발주</button><button data-view="marketView"><b>₩</b>시세</button><button data-view="historyView"><b>◫</b>이력</button><button data-view="settingsView"><b>⚙</b>설정</button>
+  </nav>
+  <div id="modalRoot"></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="market-data.js?v=1"></script><script src="app.js?v=35"></script><script src="grade-market.js?v=6"></script>
+</body>
+</html>
