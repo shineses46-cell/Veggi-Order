@@ -1,0 +1,46 @@
+{
+  "collectedAt": "2026-09-21T19:26:33.121Z",
+  "date": "20260922",
+  "items": {
+    "lettuce-green": {
+      "name": "청상추",
+      "rows": [],
+      "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+    },
+    "cucumber": {
+      "name": "취청오이",
+      "rows": [],
+      "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+    },
+    "carrot": {
+      "name": "당근 수입",
+      "rows": [],
+      "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+    },
+    "iceberg": {
+      "name": "양상추(일반)",
+      "rows": [],
+      "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+    },
+    "red-cabbage": {
+      "name": "빨간 양배추",
+      "rows": [],
+      "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+    },
+    "chili": {
+      "name": "청양고추",
+      "rows": [],
+      "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+    },
+    "perilla": {
+      "name": "깻잎",
+      "rows": [],
+      "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+    },
+    "green-onion": {
+      "name": "대파(일반)",
+      "rows": [],
+      "error": "Unexpected token '<', \"<?xml vers\"... is not valid JSON"
+    }
+  }
+}
