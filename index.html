@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#167a52">
   <title>Veggi Order · 베지 오더</title>
   <link rel="stylesheet" href="styles.css?v=33">
-  <style>.grade-picker button.unavailable{min-width:48px;background:#f1f3f2;color:#9aa69f;text-decoration:line-through;cursor:not-allowed}.chart-dot.no-trade{fill:#a12e2e;stroke:#691717;stroke-width:2.5}.chart-closed{fill:#8b2020;font-size:9px;font-weight:900;pointer-events:none}.chart-closed-band{fill:#ba76541c;pointer-events:none}.chart-tooltip{opacity:.82;pointer-events:none}</style>
+  <style>.grade-picker button.unavailable{min-width:48px;background:#f1f3f2;color:#9aa69f;text-decoration:line-through;cursor:not-allowed}.chart-dot.no-trade{fill:#a12e2e;stroke:#691717;stroke-width:2.5}.chart-closed{fill:#8b2020;font-size:9px;font-weight:900;pointer-events:none}.chart-closed-band{fill:#ba76541c;pointer-events:none}.chart-tooltip{opacity:.82;pointer-events:none}.days-left{color:#15724d!important;font-weight:900!important}.order-stepper{display:grid;grid-template-columns:30px minmax(0,1fr) 30px;overflow:hidden;border:1px solid #ccd8d0;border-radius:8px}.order-stepper button{border:0;background:#f1f7f3;color:#167a52;font-size:18px;font-weight:900}.order-stepper input{min-width:0!important;border:0!important;border-right:1px solid #dbe4de!important;border-left:1px solid #dbe4de!important;border-radius:0!important}.market-unit-picker{display:flex;flex-wrap:wrap;align-items:center;gap:5px;padding:7px 0 1px;color:#68766e;font-size:10px;font-weight:900}.market-unit-picker button{min-height:27px;padding:0 7px;border:1px solid #d3e0d8;border-radius:7px;background:#fff;color:#50655a;font-size:10px;font-weight:900}.market-unit-picker button.active{border-color:#167a52;background:#167a52;color:#fff}.market-unit-picker small{margin-left:auto;color:#8b2020;font-size:9px}.market-unit-picker small b{color:#a12e2e;font-size:13px}</style>
 </head>
 <body>
   <main class="app-shell">
@@ -24,6 +24,6 @@
     <button data-view="inventoryView" class="active"><b>▦</b>재고</button><button data-view="ordersView"><b>▤</b>발주</button><button data-view="marketView"><b>₩</b>시세</button><button data-view="historyView"><b>◫</b>이력</button><button data-view="settingsView"><b>⚙</b>설정</button>
   </nav>
   <div id="modalRoot"></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="market-data.js?v=2"></script><script src="app.js?v=36"></script><script src="grade-market.js?v=12"></script>
+  <script src="market-data.js?v=2"></script><script src="app.js?v=36"></script><script src="grade-market.js?v=13"></script><script src="inventory-order-enhancements.js?v=1"></script>
 </body>
 </html>
