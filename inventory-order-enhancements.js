@@ -10,6 +10,7 @@
     document.querySelectorAll('input[data-stock]').forEach(input => {
       const parent = input.closest('.stock-row'), info = parent?.querySelector('.stock-name'), meta = catalog[input.dataset.stock];
       if (!info || !meta || info.querySelector('.days-left')) return;
+      if (input.value === '') return;
       const stock = Number(input.value);
       if (!Number.isFinite(stock)) return;
       const days = stock / (meta.received / meta.cycle);
