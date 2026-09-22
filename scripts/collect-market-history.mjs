@@ -2,7 +2,7 @@ import fs from 'node:fs';
 
 const items = {
   'lettuce-green': '청상추', cucumber: '취청오이', carrot: '당근 수입',
-  iceberg: '양상추(일반)', 'red-cabbage': '빨간 양배추', chili: '청양고추',
+  iceberg: '양상추(일반)', 'red-cabbage': '빨간양배추 국산', chili: '청양고추',
   perilla: '깻잎', 'green-onion': '대파(일반)'
 };
 
@@ -13,6 +13,10 @@ const option = (name, fallback) => {
 };
 const days = Math.max(1, Math.min(45, option('--days', 1)));
 const endOffset = Math.max(0, option('--end-offset', 1));
+const onlyIndex = args.indexOf('--only');
+const only = onlyIndex < 0 ? null : args[onlyIndex + 1];
+const selectedItems = only ? Object.fromEntries(Object.entries(items).filter(([key]) => key === only)) : items;
+if (only && !Object.keys(selectedItems).length) throw new Error(`알 수 없는 품목 ID: ${only}`);
 
 if (!process.env.GARAK_API_ID || !process.env.GARAK_API_PASSWORD) {
   throw new Error('GARAK_API_ID와 GARAK_API_PASSWORD 환경 변수가 필요합니다.');
@@ -53,7 +57,7 @@ for (const offset of offsets) {
   const date = ymd(offset);
   const previous = previousTradeDate(offset);
   const weekBefore = ymd(offset - 7);
-  const itemRows = await Promise.all(Object.entries(items).map(async ([key, name]) => [key, await collectItem(date, previous, weekBefore, key, name)]));
+  const itemRows = await Promise.all(Object.entries(selectedItems).map(async ([key, name]) => [key, await collectItem(date, previous, weekBefore, key, name)]));
   const snapshot = { collectedAt: new Date().toISOString(), date, items: Object.fromEntries(itemRows) };
   snapshots.push(snapshot);
   const found = itemRows.reduce((count, [, item]) => count + (item.rows.length ? 1 : 0), 0);
@@ -63,9 +67,12 @@ for (const offset of offsets) {
 fs.mkdirSync('market', { recursive: true });
 let history = [];
 try { history = JSON.parse(fs.readFileSync('market/history.json', 'utf8')); } catch {}
-const replacements = new Map(snapshots.map((snapshot) => [snapshot.date, snapshot]));
-history = (Array.isArray(history) ? history : []).filter((snapshot) => !replacements.has(snapshot.date));
-history = history.concat(snapshots).sort((a, b) => a.date.localeCompare(b.date)).slice(-45);
+const existing = new Map((Array.isArray(history) ? history : []).map(snapshot => [snapshot.date, snapshot]));
+for (const snapshot of snapshots) {
+  const before = existing.get(snapshot.date);
+  existing.set(snapshot.date, before ? { ...before, collectedAt: snapshot.collectedAt, items: { ...before.items, ...snapshot.items } } : snapshot);
+}
+history = [...existing.values()].sort((a, b) => a.date.localeCompare(b.date)).slice(-45);
 fs.writeFileSync('market/history.json', `${JSON.stringify(history, null, 2)}\n`);
 fs.writeFileSync('market/latest.json', `${JSON.stringify(history.at(-1) || {}, null, 2)}\n`);
 console.log(`완료: ${snapshots.length}일치, history ${history.length}일치 저장`);

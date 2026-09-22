@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-22T15:50:29.560Z",
+  "collectedAt": "2026-09-22T16:23:51.075Z",
   "date": "20260922",
   "items": {
     "lettuce-green": {
@@ -299,10 +299,58 @@
       "format": "json"
     },
     "red-cabbage": {
-      "name": "빨간 양배추",
-      "rows": [],
-      "format": "json",
-      "apiMessage": "데이터가 없습니다."
+      "name": "빨간양배추 국산",
+      "rows": [
+        {
+          "MA_P": "      17,500",
+          "PUM_NM": "빨간양배추 국산",
+          "G_NAME": "상",
+          "D_MARK_R": "115.3",
+          "D_MARK_P": "10,931",
+          "MI_P": "       9,500",
+          "J_SAME_MARK_R": "56.3",
+          "J_SAME_P": "      10,537",
+          "J_SAME_R": "         119.6",
+          "J_SAME_MARK_P": "22,385",
+          "ROWNO": 1,
+          "FLUC": "       1,673",
+          "AV_P": "      12,604",
+          "U_NAME": "8 kg상자"
+        },
+        {
+          "MA_P": "       9,500",
+          "PUM_NM": "빨간양배추 국산",
+          "G_NAME": "보통",
+          "D_MARK_R": "96.1",
+          "D_MARK_P": "8,313",
+          "MI_P": "       6,500",
+          "J_SAME_MARK_R": "43.3",
+          "J_SAME_P": "       8,091",
+          "J_SAME_R": "          98.8",
+          "J_SAME_MARK_P": "18,470",
+          "ROWNO": 2,
+          "FLUC": "        -321",
+          "AV_P": "       7,992",
+          "U_NAME": "8 kg상자"
+        },
+        {
+          "MA_P": "       6,500",
+          "PUM_NM": "빨간양배추 국산",
+          "G_NAME": "하",
+          "D_MARK_R": "96.3",
+          "D_MARK_P": "5,628",
+          "MI_P": "       3,000",
+          "J_SAME_MARK_R": "48.8",
+          "J_SAME_P": "       5,311",
+          "J_SAME_R": "         102.0",
+          "J_SAME_MARK_P": "11,107",
+          "ROWNO": 3,
+          "FLUC": "        -209",
+          "AV_P": "       5,419",
+          "U_NAME": "8 kg상자"
+        }
+      ],
+      "format": "json"
     },
     "chili": {
       "name": "청양고추",
