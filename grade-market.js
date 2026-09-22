@@ -2,7 +2,7 @@
   const apiGrade = g => g === "중" ? "보통" : g;
   const won = v => `₩${Math.round(v || 0).toLocaleString("ko-KR")}`;
   const n = v => Number(String(v ?? "").replace(/[^0-9.-]/g, "")) || 0;
-  const dates = days => Array.from({length: days}, (_, i) => { const d = new Date(); d.setDate(d.getDate() - (days - 1 - i)); return d; });
+  const dates = days => Array.from({length: days}, (_, i) => { const raw=window.VeggiMarketLatestDate; const d=/^\d{8}$/.test(raw||"")?new Date(Number(raw.slice(0,4)),Number(raw.slice(4,6))-1,Number(raw.slice(6,8)),12):new Date(); d.setDate(d.getDate() - (days - 1 - i)); return d; });
   const idFromCard = card => card.dataset.marketId;
   const gradeCache = new WeakMap();
   const preparedCards = new WeakSet();

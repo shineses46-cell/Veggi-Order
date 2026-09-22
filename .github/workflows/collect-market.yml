@@ -18,37 +18,7 @@ jobs:
         env:
           GARAK_API_ID: ${{ secrets.GARAK_API_ID }}
           GARAK_API_PASSWORD: ${{ secrets.GARAK_API_PASSWORD }}
-        run: |
-          node --input-type=module - <<'NODE'
-          import fs from 'node:fs';
-          const items = { 'lettuce-green':'청상추', cucumber:'취청오이', carrot:'당근 수입', iceberg:'양상추(일반)', 'red-cabbage':'빨간 양배추', chili:'청양고추', perilla:'깻잎', 'green-onion':'대파(일반)' };
-          const kst = (offset = 0) => new Intl.DateTimeFormat('sv-SE', { timeZone:'Asia/Seoul' }).format(new Date(Date.now() + offset * 86400000)).replaceAll('-', '');
-          // 오전 수집은 아직 경매가 끝나지 않은 당일 대신 전일 거래일을 저장한다.
-          let offset = -1;
-          const yesterday = new Date(Date.now() - 86400000);
-          const yesterdayWeekday = new Intl.DateTimeFormat('en-US', { timeZone:'Asia/Seoul', weekday:'short' }).format(yesterday);
-          if (yesterdayWeekday === 'Sun') offset = -2; // 월요일에는 일요일 대신 금요일
-          const date = kst(offset), previous = kst(offset - 1), weekBefore = kst(offset - 7);
-          const snapshot = { collectedAt:new Date().toISOString(), date, items:{} };
-          for (const [key, name] of Object.entries(items)) {
-            // dataJsonOpen은 UTF-8 URLSearchParams 요청에서 실제 JSON 가격 행을 반환한다.
-            const query = new URLSearchParams({ id:process.env.GARAK_API_ID, passwd:process.env.GARAK_API_PASSWORD, dataid:'data36', pagesize:'50', pageidx:'1', 'portal.templet':'false', s_date:date, s_date_p:previous, s_date_p7:weekBefore, p_pos_gubun:'1', s_pum_nm:'2', s_pummok:name });
-            try {
-              const response = await fetch('https://www.garak.co.kr/homepage/publicdata/dataJsonOpen.do?' + query);
-              const raw = await response.text();
-              let payload = {};
-              try { payload = JSON.parse(raw); }
-              catch { payload = { ApiErrorMsg: raw.match(/ApiErrorMsg:([^}<]+)/)?.[1]?.trim() || '데이터가 없습니다.' }; }
-              const rows = Array.isArray(payload.resultData) ? payload.resultData : [];
-              snapshot.items[key] = { name, rows, format:'json', ...(rows.length ? {} : { apiMessage:String(payload.ApiErrorMsg || payload.message || '데이터가 없습니다.') }) };
-            } catch (error) { snapshot.items[key] = { name, rows:[], error:String(error.message || error) }; }
-          }
-          fs.mkdirSync('market', { recursive:true });
-          fs.writeFileSync('market/latest.json', JSON.stringify(snapshot, null, 2));
-          let history = []; try { history = JSON.parse(fs.readFileSync('market/history.json', 'utf8')); } catch {}
-          history = (Array.isArray(history) ? history : []).filter(item => item.date !== date).concat(snapshot).slice(-45);
-          fs.writeFileSync('market/history.json', JSON.stringify(history, null, 2));
-          NODE
+        run: node scripts/collect-market-history.mjs --days 1 --end-offset 1
       - name: Save snapshots
         run: |
           git config user.name "veggi-order-bot"

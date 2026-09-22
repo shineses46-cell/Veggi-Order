@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-22T15:32:25.744Z",
+  "collectedAt": "2026-09-22T15:50:29.560Z",
   "date": "20260922",
   "items": {
     "lettuce-green": {
@@ -301,7 +301,7 @@
     "red-cabbage": {
       "name": "빨간 양배추",
       "rows": [],
-      "format": "html",
+      "format": "json",
       "apiMessage": "데이터가 없습니다."
     },
     "chili": {

@@ -4,6 +4,14 @@
   const history = nativeFetch("./market/history.json", { cache: "no-store" })
     .then(response => response.ok ? response.json() : [])
     .catch(() => []);
+  // 차트의 끝 날짜는 휴대폰의 오늘이 아니라 마지막으로 수집된 거래일이다.
+  // 당일 경매가 아직 없는 오전에도 존재하지 않는 날짜를 그리지 않는다.
+  window.VeggiMarketHistoryReady = history;
+  history.then(snapshots => {
+    const latest = snapshots.at?.(-1);
+    window.VeggiMarketLatestDate = latest?.date || null;
+    window.dispatchEvent(new Event("veggi-market-history-ready"));
+  });
   const idFromQuery = value => new URL(value, location.href).searchParams;
   window.fetch = async (resource, options) => {
     const url = String(resource);
