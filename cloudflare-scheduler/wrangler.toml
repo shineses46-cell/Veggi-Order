@@ -1,0 +1,12 @@
+name = "veggi-order-market-scheduler"
+main = "src/index.js"
+compatibility_date = "2026-09-24"
+
+# UTC 기준. 한국시간 06:17~17:17에 가락시장 당일 자료 갱신 시점을 관찰한다.
+[triggers]
+crons = ["17 21-23 * * *", "17 0-8 * * *"]
+
+[vars]
+GITHUB_REPOSITORY = "shineses46-cell/Veggi-Order"
+GITHUB_WORKFLOW = "collect-market.yml"
+GITHUB_REF = "main"
