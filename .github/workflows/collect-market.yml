@@ -6,14 +6,15 @@ on:
       end_offset:
         description: "조회 기준일 (0: 오늘, 1: 전날)"
         required: false
-        default: "1"
+        default: "0"
         type: choice
         options:
           - "1"
           - "0"
   schedule:
-    # 매일 한국시간 오전 6시 17분
-    - cron: "17 21 * * *"
+    # 한국시간 06:17~17:17. API 갱신 가능 시각을 조사하는 임시 일정.
+    - cron: "17 21-23 * * *"
+    - cron: "17 0-8 * * *"
 
 permissions:
   contents: write
@@ -27,11 +28,11 @@ jobs:
         env:
           GARAK_API_ID: ${{ secrets.GARAK_API_ID }}
           GARAK_API_PASSWORD: ${{ secrets.GARAK_API_PASSWORD }}
-        run: node scripts/collect-market-history.mjs --days 1 --end-offset ${{ inputs.end_offset || '1' }}
+        run: node scripts/collect-market-history.mjs --days 1 --end-offset ${{ github.event_name == 'schedule' && '0' || inputs.end_offset }}
       - name: Save snapshots
         run: |
           git config user.name "veggi-order-bot"
           git config user.email "veggi-order-bot@users.noreply.github.com"
-          git add market/latest.json market/history.json
+          git add market/latest.json market/history.json market/availability-log.json
           git diff --cached --quiet || git commit -m "Update market snapshot"
           git push

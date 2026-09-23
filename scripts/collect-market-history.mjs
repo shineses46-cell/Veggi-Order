@@ -53,26 +53,39 @@ async function collectItem(date, previous, weekBefore, key, name) {
 }
 
 const snapshots = [];
+const checks = [];
 for (const offset of offsets) {
   const date = ymd(offset);
   const previous = previousTradeDate(offset);
   const weekBefore = ymd(offset - 7);
   const itemRows = await Promise.all(Object.entries(selectedItems).map(async ([key, name]) => [key, await collectItem(date, previous, weekBefore, key, name)]));
   const snapshot = { collectedAt: new Date().toISOString(), date, items: Object.fromEntries(itemRows) };
-  snapshots.push(snapshot);
   const found = itemRows.reduce((count, [, item]) => count + (item.rows.length ? 1 : 0), 0);
+  checks.push({ date, checkedAt: snapshot.collectedAt, itemsWithRows: found, itemCount: itemRows.length });
+  // API 갱신 전의 빈 응답은 실제 휴장/거래 없음으로 취급하지 않는다.
+  // 가격 행이 하나라도 도착했을 때만 해당 날짜의 시세 스냅샷을 앱 이력에 반영한다.
+  if (found) snapshots.push(snapshot);
   console.log(`${date}: ${found}/${itemRows.length}개 품목 가격 행 수집`);
 }
 
 fs.mkdirSync('market', { recursive: true });
 let history = [];
 try { history = JSON.parse(fs.readFileSync('market/history.json', 'utf8')); } catch {}
+let availability = [];
+try { availability = JSON.parse(fs.readFileSync('market/availability-log.json', 'utf8')); } catch {}
 const existing = new Map((Array.isArray(history) ? history : []).map(snapshot => [snapshot.date, snapshot]));
 for (const snapshot of snapshots) {
   const before = existing.get(snapshot.date);
-  existing.set(snapshot.date, before ? { ...before, collectedAt: snapshot.collectedAt, items: { ...before.items, ...snapshot.items } } : snapshot);
+  const items = Object.fromEntries(Object.entries(snapshot.items).map(([id, next]) => {
+    const previous = before?.items?.[id];
+    // 이후 재조회에서 일시적으로 빈 응답이 와도 이미 확보한 실제 가격을 지우지 않는다.
+    return [id, next.rows.length || !previous?.rows?.length ? next : previous];
+  }));
+  existing.set(snapshot.date, before ? { ...before, collectedAt: snapshot.collectedAt, items: { ...before.items, ...items } } : snapshot);
 }
 history = [...existing.values()].sort((a, b) => a.date.localeCompare(b.date)).slice(-45);
+availability = [...availability, ...checks].slice(-500);
 fs.writeFileSync('market/history.json', `${JSON.stringify(history, null, 2)}\n`);
 fs.writeFileSync('market/latest.json', `${JSON.stringify(history.at(-1) || {}, null, 2)}\n`);
-console.log(`완료: ${snapshots.length}일치, history ${history.length}일치 저장`);
+fs.writeFileSync('market/availability-log.json', `${JSON.stringify(availability, null, 2)}\n`);
+console.log(`완료: 실제 시세 ${snapshots.length}일치, history ${history.length}일치 저장`);
