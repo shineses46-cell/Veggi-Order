@@ -3,7 +3,7 @@
   const catalog = {
     'lettuce-green': { received: 4, cycle: 3 }, cucumber: { received: 50, cycle: 3 }, carrot: { received: 10, cycle: 3 },
     iceberg: { received: 2, cycle: 4 }, 'red-cabbage': { received: 4, cycle: 4 }, chili: { received: 1.5, cycle: 7 },
-    perilla: { received: 1, cycle: 10 }, 'green-onion': { received: 2, cycle: 10 }
+    perilla: { received: 1, cycle: 10 }, 'green-onion': { received: 2, cycle: 10 }, rice: { received: 20, cycle: 14 }, egg: { received: 30, cycle: 7 }
   };
   const format = value => value >= 10 ? Math.round(value) : Math.round(value * 10) / 10;
   function enhanceStock() {
