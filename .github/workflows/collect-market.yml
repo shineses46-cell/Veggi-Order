@@ -2,6 +2,15 @@ name: Collect Garak market prices
 
 on:
   workflow_dispatch:
+    inputs:
+      end_offset:
+        description: "조회 기준일 (0: 오늘, 1: 전날)"
+        required: false
+        default: "1"
+        type: choice
+        options:
+          - "1"
+          - "0"
   schedule:
     # 매일 한국시간 오전 6시 17분
     - cron: "17 21 * * *"
@@ -18,7 +27,7 @@ jobs:
         env:
           GARAK_API_ID: ${{ secrets.GARAK_API_ID }}
           GARAK_API_PASSWORD: ${{ secrets.GARAK_API_PASSWORD }}
-        run: node scripts/collect-market-history.mjs --days 1 --end-offset 1
+        run: node scripts/collect-market-history.mjs --days 1 --end-offset ${{ inputs.end_offset || '1' }}
       - name: Save snapshots
         run: |
           git config user.name "veggi-order-bot"
