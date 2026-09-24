@@ -64,7 +64,8 @@ function restore(f){const reader=new FileReader();reader.onload=()=>{try{const d
 autoReceiveDueOrders();applyFontScale();render();
 
 /* 2026-09-24: 확대 글꼴과 입고 취소·단위 UX 보완 */
-const TOOLTIP_SCALE_KEY="veggi-order-tooltip-scale";
+/* var로 선언해 초기 화면의 글자 크기 적용보다 먼저 안전하게 참조되도록 한다. */
+var TOOLTIP_SCALE_KEY="veggi-order-tooltip-scale";
 function tooltipScale(){return Number(localStorage.getItem(TOOLTIP_SCALE_KEY)||1)}
 function applyFontScale(){document.documentElement.style.setProperty("--font-scale",String(fontScale()));document.documentElement.style.setProperty("--tooltip-font-scale",String(tooltipScale()));document.body.style.zoom=String(fontScale())}
 function setTooltipScale(value){localStorage.setItem(TOOLTIP_SCALE_KEY,String(value));applyFontScale();settings();market();message("그래프 정보 글자 크기를 적용했어요.")}
