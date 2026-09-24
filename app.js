@@ -174,3 +174,7 @@ document.addEventListener("change",event=>{
   event.stopImmediatePropagation();
   const x=item(input.dataset.stockDays);setStock(x.id,stockFromDays(x,input.value));
 },true);
+document.addEventListener("blur",event=>{
+  const input=event.target.matches?.("[data-stock-days]")?event.target:null;if(!input)return;
+  const x=item(input.dataset.stockDays);if(x)setStock(x.id,stockFromDays(x,input.value));
+},true);
