@@ -10,6 +10,15 @@
   <style>
     .receipt-panel>div{padding-top:9px;margin-top:9px;border-top:1px solid #e7eee9}.receipt-panel>div:first-of-type{padding-top:0;margin-top:6px;border-top:0}.receipt-panel button{min-height:34px;font-size:11px}.return-list{display:grid;gap:8px;margin:14px 0}.return-row{display:grid;grid-template-columns:minmax(0,1fr) 174px;gap:9px;align-items:center;padding:10px;border:1px solid #dfe8e2;border-radius:10px}.return-row span{display:grid;gap:3px}.return-row strong{font-size:14px}.return-row small{color:#68766e;font-size:10px}.return-row input{min-height:38px;border:1px solid #ccd8d0;border-radius:8px;padding:0 7px;text-align:right;font-size:15px;font-weight:900}.return-control{display:grid;grid-template-columns:minmax(0,1fr) 62px;gap:5px;align-items:stretch}.return-control input{grid-column:2;grid-row:1;width:100%;min-width:0}.return-slots{grid-column:1;grid-row:1;gap:3px}.return-slots button{min-height:38px;font-size:10px}.return-confirm{width:100%}.history-delete{display:block;min-height:29px;margin-top:8px;padding:0 8px;border:1px solid #edc6b6;border-radius:7px;background:#fff8f3;color:#a84d20;font-size:10px;font-weight:900}.font-size-card{padding:15px}.font-size-card strong{font-size:15px}.font-size-card p{margin:5px 0 12px;color:#68766e;font-size:11px}.font-size-options{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.font-size-options button{min-height:42px;border:1px solid #cbd8d0;border-radius:9px;background:#fff;color:#496157;font-size:13px;font-weight:900}.font-size-options button.active{border-color:#167a52;background:#167a52;color:#fff}@media(max-width:380px){.return-row{grid-template-columns:minmax(0,1fr) 164px;gap:5px;padding:8px}.return-control{grid-template-columns:minmax(0,1fr) 58px}}
   </style>
+  <style>
+    /* 큰 글꼴과 특 없음 상태도 등급 버튼의 위치·모양을 동일하게 유지한다. */
+    .market-top .grade-picker{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;flex:0 0 150px!important;width:150px!important;max-width:100%;margin-left:auto;overflow:hidden!important;border-radius:9px!important}
+    .market-top .grade-picker button,.market-top .grade-picker button.unavailable{min-width:0!important;padding:0 4px!important;border-radius:0!important;white-space:nowrap!important}
+    .market-top .grade-picker button:first-child{border-radius:8px 0 0 8px!important}.market-top .grade-picker button:last-child{border-radius:0 8px 8px 0!important}
+    /* 큰 글꼴에서는 이력 상세를 화면 중앙에 두고 모달 내부만 스크롤한다. */
+    .modal-backdrop{align-items:center;padding:12px;overflow:auto}.modal{width:min(100%,760px);max-height:calc(100dvh - 24px);margin:auto;border-radius:20px;padding-top:19px}
+    @media(max-width:380px){.market-top .grade-picker{flex-basis:150px!important;width:150px!important}.modal-backdrop{padding:8px}.modal{max-height:calc(100dvh - 16px)}}
+  </style>
 </head>
 <body>
   <main class="app-shell">
@@ -27,6 +36,6 @@
     <button data-view="inventoryView" class="active"><b>▦</b>재고</button><button data-view="ordersView"><b>▤</b>발주</button><button data-view="marketView"><b>₩</b>시세</button><button data-view="historyView"><b>◫</b>이력</button><button data-view="settingsView"><b>⚙</b>설정</button>
   </nav>
   <div id="modalRoot"></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="market-data.js?v=3"></script><script src="app.js?v=45"></script><script src="grade-market.js?v=19"></script><script src="inventory-order-enhancements.js?v=3"></script>
+  <script src="market-data.js?v=3"></script><script src="app.js?v=46"></script><script src="grade-market.js?v=20"></script><script src="inventory-order-enhancements.js?v=3"></script>
 </body>
 </html>
