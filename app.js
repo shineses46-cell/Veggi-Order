@@ -1,6 +1,6 @@
 const KEY="veggi-order-v3",OLD=["green-stock-stable-v1","green-stock-data-v2","green-stock-data-v1"];
 const base=[
-["lettuce-green","청상추",3,"kg",4,2,4,""],["cucumber","취청오이",3,"개",50,25,50,""],["carrot","수입당근",3,"kg",10,5,10,"2L"],["iceberg","양상추",4,"통",2,1,2,""],["red-cabbage","적채",4,"통",4,2,4,""],["chili","청양고추",7,"kg",1.5,.7,1.5,""],["perilla","깻잎",10,"kg",1,.3,1,""],["green-onion","대파",10,"단",2,1,2,""],["rice","쌀",14," ×10kg",2,.5,2,""],["egg","계란",7,"판",1,.5,1,"30구"]
+["lettuce-green","청상추",3,"kg",4,2,4,""],["cucumber","취청오이",3,"개",50,25,50,""],["carrot","수입당근",3,"kg",10,5,10,"2L"],["iceberg","양상추",4,"통",2,1,2,""],["red-cabbage","적채",4,"통",4,2,4,""],["chili","청양고추",7,"kg",1.5,.7,1.5,""],["perilla","깻잎",10,"kg",1,.3,1,""],["green-onion","대파",10,"단",2,1,2,""],["rice","쌀",14," ×10kg",2,1,2,""],["egg","계란",7,"판",1,1,1,"30구"]
 ].map(([id,name,cycle,unit,received,threshold,orderAmount,spec])=>({id,name,cycle,unit,received,threshold,orderAmount,spec,stock:"",updatedAt:null,expiry:"",price:0}));
 const seed={"lettuce-green":[11800,[10400,10700,10100,11200,10900,11100,11800],"4kg"],cucumber:[29500,[31000,30500,29900,30100,29400,30200,29500],"50개"],carrot:[23100,[20400,21100,21600,21800,22300,21900,23100],"10kg / 2L"],iceberg:[12700,[11200,11500,11800,12100,11700,11900,12700],"2통"],"red-cabbage":[16800,[15900,16200,16900,17200,17000,17400,16800],"4통"],chili:[19800,[16900,17500,17800,18300,18700,18400,19800],"1.5kg"],perilla:[22400,[24100,23900,23600,23200,22900,23800,22400],"1kg"],"green-onion":[10600,[9200,9500,9800,9700,9900,10100,10600],"2단"]};
 const candidates={"lettuce-green":"청상추",cucumber:"취청오이",carrot:"당근 수입",iceberg:"양상추(일반)","red-cabbage":"빨간 양배추",chili:"청양고추",perilla:"깻잎","green-onion":"대파"},MARKET_CACHE_KEY="veggi-order-market-cache-v1";
@@ -74,14 +74,16 @@ function migrateOperatingUnits(data){
   const convertLines=(lines,id,divisor)=>{if(lines&&lines[id]!==undefined)lines[id]=decimal(lines[id],divisor)};
   const convertReceipts=(id,divisor)=>data.receipts?.forEach(receipt=>{convertLines(receipt.lines,id,divisor);convertLines(receipt.returned,id,divisor)});
   if(rice?.unit==="kg"){
-    rice.stock=decimal(rice.stock,10);rice.unit=" ×10kg";rice.received=2;rice.threshold=.5;rice.orderAmount=2;
+    rice.stock=decimal(rice.stock,10);rice.unit=" ×10kg";rice.received=2;rice.threshold=1;rice.orderAmount=2;
     convertLines(data.order?.lines,"rice",10);convertReceipts("rice",10);
   }
   if(rice?.unit==="10kg")rice.unit=" ×10kg";
+  if(rice){rice.unit=" ×10kg";rice.received=2;rice.threshold=1;rice.orderAmount=2;}
   if(egg?.unit==="개"){
-    egg.stock=decimal(egg.stock,30);egg.unit="판";egg.received=1;egg.threshold=.5;egg.orderAmount=1;
+    egg.stock=decimal(egg.stock,30);egg.unit="판";egg.received=1;egg.threshold=1;egg.orderAmount=1;
     convertLines(data.order?.lines,"egg",30);convertReceipts("egg",30);
   }
+  if(egg){egg.unit="판";egg.received=1;egg.threshold=1;egg.orderAmount=1;}
   return data;
 }
 function orders(){
@@ -96,7 +98,7 @@ function returnModal(receiptId){
   const receipt=(state.receipts||[]).find(x=>x.id===receiptId);if(!receipt)return;
   const rows=Object.keys(receipt.lines||{}).map(id=>{
     const x=item(id),remaining=receiptRemaining(receipt,id),half=Math.round(remaining/2*10)/10;
-    return remaining?`<div class="return-row"><span><strong>${esc(x?.name||id)}</strong><small>취소 가능 ${qty(remaining)}${x?.unit||""}</small></span><div class="return-control"><input data-return-qty="${id}" type="number" min="0" max="${remaining}" step="${step(x||{unit:""})}" value="0"><div class="quick-values return-slots"><button type="button" data-return-value="${id}" data-value="0">0</button><button type="button" data-return-value="${id}" data-value="${half}">${qty(half)}</button><button type="button" data-return-value="${id}" data-value="${remaining}">${qty(remaining)}</button></div></div></div>`:"";
+    return remaining?`<div class="return-row"><span><strong>${esc(x?.name||id)}</strong><small>취소 가능 ${qty(remaining)}${x?.unit||""}</small></span><div class="return-control"><div class="quick-values return-slots"><button type="button" data-return-value="${id}" data-value="0">0</button><button type="button" data-return-value="${id}" data-value="${half}">${qty(half)}</button><button type="button" data-return-value="${id}" data-value="${remaining}">${qty(remaining)}</button></div><input data-return-qty="${id}" type="number" min="0" max="${remaining}" step="${step(x||{unit:""})}" value="0"></div></div>`:"";
   }).join("");
   $("#modalRoot").innerHTML=`<div class="modal-backdrop"><section class="modal"><div class="modal-top"><div><h3>반품·입고 취소</h3><p class="history-help">반품 수량만 입력하세요. 재고에서 같은 수량을 차감합니다.</p></div><button class="close" data-close-modal>×</button></div><div class="return-list">${rows||"<p class=\"history-help\">취소할 수량이 없습니다.</p>"}</div><button class="primary return-confirm" data-confirm-return="${receipt.id}">입고 취소 반영</button></section></div>`;
 }
@@ -111,3 +113,32 @@ document.addEventListener("click",event=>{const button=event.target.closest("[da
 document.addEventListener("click",event=>{const button=event.target.closest("[data-tooltip-scale]");if(button)setTooltipScale(Number(button.dataset.tooltipScale))});
 function restore(f){const reader=new FileReader();reader.onload=()=>{try{const data=JSON.parse(reader.result);if(!Array.isArray(data.items))throw 0;state=migrateOperatingUnits({items:normalize(data.items),history:data.history||[],receipts:data.receipts||[],order:data.order||data.orderDraft||{stage:"ready",delivery:key(Date.now()+864e5),lines:{}},market:{period:data.market?.period||data.market?.range||7,order:(data.market?.order||base.filter(x=>!["rice","egg"].includes(x.id)).map(x=>x.id)).filter(id=>!["rice","egg"].includes(id)),grades:data.market?.grades||{}},draftBefore:{}});autoReceiveDueOrders();save();render();message("백업을 복원했어요.")}catch{message("올바른 백업 파일이 아닙니다.")}};reader.readAsText(f)}
 state=migrateOperatingUnits(state);save();applyFontScale();render();
+
+/* 글자 크기 메뉴는 한 번의 전역 클릭 처리만 사용한다. 이전 누적 리스너와
+   재렌더링이 겹쳐 설정 화면이 멈추던 경로를 차단한다. */
+function setFontScale(value){
+  const scale=[.9,1,1.15,1.3].includes(value)?value:1;
+  localStorage.setItem(FONT_SCALE_KEY,String(scale));
+  applyFontScale();
+  settings();
+  message("글자 크기를 적용했어요.");
+}
+document.addEventListener("click",event=>{
+  const pageButton=event.target.closest("[data-settings-page]");
+  if(!pageButton)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  settingsPage=pageButton.dataset.settingsPage||"menu";
+  settings();
+},true);
+document.addEventListener("click",event=>{
+  const button=event.target.closest("[data-font-scale]");
+  if(!button)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  setFontScale(Number(button.dataset.fontScale));
+},true);
+document.addEventListener("click",event=>{
+  const button=event.target.closest("[data-tooltip-scale]");
+  if(!button)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  setTooltipScale(Number(button.dataset.tooltipScale));
+},true);
