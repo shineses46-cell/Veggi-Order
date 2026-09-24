@@ -11,7 +11,7 @@
 - 첫 GitHub 실행 토큰은 자동화 출력에 노출될 가능성이 확인되어 즉시 폐기했습니다. 교체 토큰은 사용자가 Cloudflare Production Secret `GITHUB_DISPATCH_TOKEN`으로 직접 저장했습니다.
 - 공개 환경변수 `GITHUB_REPOSITORY`, `GITHUB_WORKFLOW`, `GITHUB_REF`를 Production에 등록했습니다. Cloudflare Cron Trigger 두 개(`17 21-23 * * *`, `17 0-8 * * *`)를 저장해 한국시간 06:17~17:17 매시 17분 실행으로 설정했습니다.
 - Cloudflare의 예약 이벤트 수동 시험은 Worker 로그에 `GitHub 수집 작업 요청 완료`를 남겼고, GitHub Actions 실행 10번이 `workflow_dispatch`로 생성되어 성공 완료했습니다.
-- 중복 호출을 막기 위해 GitHub Actions 자체 `schedule` 항목은 제거하고 Cloudflare Cron을 유일한 자동 실행 경로로 전환합니다.
+- 중복 호출을 막기 위해 GitHub Actions 자체 `schedule` 항목을 제거하고 Cloudflare Cron을 유일한 자동 실행 경로로 전환했습니다. 원격 워크플로에도 `schedule` 항목이 없음을 확인했습니다.
 
 ## 2026-09-23 - 재고·발주 운영 보완 착수
 
