@@ -1,5 +1,18 @@
 # 진행 상황
 
+## 2026-09-24 - Cloudflare 예약 수집 전환 착수
+
+- GitHub Actions의 06:17·07:17·08:17 예약 실행이 생성되지 않은 것을 실행 이력으로 확인했습니다. 수동 수집은 성공하므로 가락시장 API·인증값·수집 코드가 아니라 GitHub `schedule` 발동 신뢰성 문제로 분리했습니다.
+- Cloudflare Workers 무료 Cron Trigger가 GitHub의 `workflow_dispatch`를 호출하는 구조를 준비합니다. 가락시장 API 비밀값은 GitHub Secrets에 유지하고, Cloudflare에는 GitHub Actions 실행 전용의 제한된 토큰만 비밀값으로 둡니다.
+- `cloudflare-scheduler/`에 Worker 소스, UTC Cron 두 개(한국시간 06:17~17:17), 배포·토큰 설정 안내를 작성했습니다. Worker는 GitHub 수집 작업만 호출하며 외부 HTTP 요청으로 수집을 강제할 수 없습니다.
+- GitHub 수집 작업에는 동시 실행 방지 그룹을 추가했습니다. Cloudflare 연결 성공을 확인하기 전까지 기존 GitHub 예약은 백업으로 유지합니다.
+- 검증을 마친 설정은 GitHub `main` 브랜치에 `e8c0ec0 Add Cloudflare market scheduler`로 반영했습니다. Cloudflare 로그인 화면을 열어 두었으며, 계정 로그인이 필요한 단계에서 대기합니다.
+- Cloudflare에 `veggi-order-market-scheduler` Worker를 생성하고, GitHub 수집 작업을 호출하는 코드 버전 `4c57ffe5`를 배포했습니다.
+- 첫 GitHub 실행 토큰은 자동화 출력에 노출될 가능성이 확인되어 즉시 폐기했습니다. 교체 토큰은 사용자가 Cloudflare Production Secret `GITHUB_DISPATCH_TOKEN`으로 직접 저장했습니다.
+- 공개 환경변수 `GITHUB_REPOSITORY`, `GITHUB_WORKFLOW`, `GITHUB_REF`를 Production에 등록했습니다. Cloudflare Cron Trigger 두 개(`17 21-23 * * *`, `17 0-8 * * *`)를 저장해 한국시간 06:17~17:17 매시 17분 실행으로 설정했습니다.
+- Cloudflare의 예약 이벤트 수동 시험은 Worker 로그에 `GitHub 수집 작업 요청 완료`를 남겼고, GitHub Actions 실행 10번이 `workflow_dispatch`로 생성되어 성공 완료했습니다.
+- 중복 호출을 막기 위해 GitHub Actions 자체 `schedule` 항목은 제거하고 Cloudflare Cron을 유일한 자동 실행 경로로 전환합니다.
+
 ## 2026-09-23 - 재고·발주 운영 보완 착수
 
 - 쌀과 계란을 재고·발주 관리 품목에 추가하고, 기기별 글자 크기를 설정에서 조절하도록 작업을 시작합니다.

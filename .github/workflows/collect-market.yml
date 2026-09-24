@@ -11,16 +11,12 @@ on:
         options:
           - "1"
           - "0"
-  schedule:
-    # 한국시간 06:17~17:17. API 갱신 가능 시각을 조사하는 임시 일정.
-    - cron: "17 21-23 * * *"
-    - cron: "17 0-8 * * *"
 
 permissions:
   contents: write
 
-# Cloudflare가 예약 실행을 대신 호출할 때, 같은 시각의 GitHub 예약 작업과
-# 수집·커밋이 겹치지 않도록 한 번에 하나만 실행한다.
+# Cloudflare Worker가 예약 실행을 호출할 때 수집·커밋이 겹치지 않도록
+# 한 번에 하나만 실행한다.
 concurrency:
   group: garak-market-collection
   cancel-in-progress: false

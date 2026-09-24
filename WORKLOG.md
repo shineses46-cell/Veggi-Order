@@ -236,6 +236,22 @@
 - 최초 정상 스냅샷을 GitHub `market/latest.json`, `market/history.json`에 반영함. 적채는 데이터 없음 상태로 보존함.
 # 2026-09-23 — 재고·발주 운영 보완 착수
 
+# 2026-09-24 — Cloudflare 예약 수집 전환 착수
+
+- GitHub Actions 예약 실행은 설정된 한국시간 06:17·07:17·08:17에 실행 기록 자체가 생성되지 않았고, 수동 실행은 정상 성공했다. 따라서 가락시장 API나 비밀값이 아닌 GitHub `schedule` 발동 누락으로 분리했다.
+- Cloudflare Worker Cron Trigger가 GitHub `workflow_dispatch`를 호출하도록 전환을 준비한다. Worker에는 GitHub Actions 실행 전용 토큰만 Secret으로 보관하고, 가락시장 인증값은 GitHub Secrets에 그대로 둔다.
+- `cloudflare-scheduler/src/index.js`와 `wrangler.toml`에 한국시간 06:17~17:17 관찰용 Cron과 호출 로직을 작성했다. GitHub Actions에는 수집·커밋 중복을 막는 concurrency group을 추가했다.
+- Worker 소스와 안내 문서는 GitHub `e8c0ec0 Add Cloudflare market scheduler` 커밋으로 공개 저장소에 반영했다. Cloudflare 계정 로그인 및 GitHub 실행 전용 토큰 Secret 등록이 남아 있다.
+- Cloudflare Worker `veggi-order-market-scheduler`를 생성하고 수집 호출 코드를 배포했다(Cloudflare 버전 `4c57ffe5`). GitHub Fine-grained token 발급 시 GitHub가 이메일 본인 확인을 요구하는 단계에서 대기 중이다.
+- 최초 GitHub 토큰은 자동화 출력 노출 가능성 때문에 발급 직후 폐기했다. 교체 토큰은 `Veggi-Order` 단일 저장소의 Actions 읽기·쓰기와 필수 Metadata 읽기만 보유하도록 다시 발급했다. Cloudflare `GITHUB_DISPATCH_TOKEN` Secret 추가 모달까지 준비했지만, Chrome 확장 UI가 자동 클립보드 붙여넣기를 차단했다.
+
+# 2026-09-24 — Cloudflare 예약 수집 전환 검증 완료
+
+- 사용자가 Cloudflare Production Secret `GITHUB_DISPATCH_TOKEN`을 직접 저장했고, 비밀값이 아닌 저장소·워크플로·브랜치 환경변수도 등록했다.
+- Cloudflare Worker `veggi-order-market-scheduler`에 Cron Trigger `17 21-23 * * *`, `17 0-8 * * *`를 저장했다. 이는 한국시간 매일 06:17~17:17에 매시 한 번씩 실행된다.
+- Worker의 수동 예약 이벤트 시험에서 GitHub dispatch 성공 로그를 확인했고, GitHub Actions 실행 10번이 성공 완료했다: https://github.com/shineses46-cell/Veggi-Order/actions/runs/35936151176
+- GitHub Actions의 자체 schedule은 Cloudflare와 중복 호출을 일으킬 수 있어 제거했다. 자동 수집은 이제 Cloudflare Cron → GitHub workflow_dispatch → 가락시장 API → GitHub JSON 갱신 경로만 사용한다.
+
 - 쌀·계란 품목 추가, 글자 크기 설정, 발주 수량 상태 동기화, 새벽 입고·반품 처리, 이력 삭제 기능을 함께 정리한다.
 - 쌀은 기본 입고·발주 20kg/기준 5kg, 계란은 기본 입고·발주 30개(30구)/기준 10개로 추가했다. 두 품목은 가락시장 시세 API 매핑이 없으므로 시세 목록에서는 제외한다.
 - 발주 품목 계산이 `stage === sent`일 때만 동작하던 오류를 `orderLines()` 기반으로 수정했다. 입력 즉시 상단·하단 수량이 업데이트되고 복사 버튼은 제거했다.
