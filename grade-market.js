@@ -31,7 +31,7 @@
     card.dataset.gradeSelectedIndex = selectedIndex; card.querySelectorAll("[data-grade-value]").forEach(b => b.classList.toggle("active", b.dataset.value === grade));
     const sub = card.querySelector(".market-top p"), prefix = sub?.textContent.split(" · ")[0], pendingToday = points.at(-1)?.status === "pending";
     if (sub) sub.textContent = `${prefix} · ${gradeLabel(grade)}등급 · 최근 ${points.length}일 중 실제 거래 ${points.filter(p => p.status === "traded").length}일${pendingToday ? " · 오늘 수집 대기" : ""}`;
-    const notice = card.closest("#marketView")?.querySelector(".notice"); if (notice && !notice.dataset.marketStatusEnhanced) { notice.innerHTML = "시세는 가락시장 실제 거래 자료입니다.<br><b>회색 점선·대기</b>는 오늘 경락가 수집 전, <b>빨간 점·휴</b>는 거래 없는 날입니다. 날짜를 누르면 상세 상태를 확인할 수 있어요."; notice.dataset.marketStatusEnhanced = "true"; }
+    const notice = card.closest("#marketView")?.querySelector(".notice"); if (notice && !notice.dataset.marketStatusEnhanced) { notice.innerHTML = "<b>회색</b>: 수집 대기 · <b>빨강</b>: 거래 없음"; notice.dataset.marketStatusEnhanced = "true"; }
     priceInfo(card, points, grade, selectedIndex);
   }
 
@@ -49,9 +49,23 @@
   window.addEventListener("click", e => { const b = e.target.closest?.("[data-market-unit]"); if (!b) return; e.preventDefault(); e.stopImmediatePropagation(); const card = b.closest(".market-card"); localStorage.setItem(`veggi-market-unit-${card.dataset.marketId}`, b.dataset.marketUnit); window.dispatchEvent(new Event("veggi-market-history-ready")); }, true);
   const indexAtPointer = (svg, clientX) => { const box = svg.getBoundingClientRect(), days = daysOf(svg.closest(".market-card")), x = (clientX - box.left) / box.width * 350; return Math.max(0, Math.min(days - 1, Math.round((x - 38) / 298 * (days - 1)))); };
   let dragging = null;
-  window.addEventListener("pointerdown", e => { const svg = e.target.closest?.(".market-card svg"); if (!svg || e.button > 0) return; const card = svg.closest(".market-card"); dragging = { pointerId: e.pointerId, svg, card, index: -1 }; svg.setPointerCapture?.(e.pointerId); const index = indexAtPointer(svg, e.clientX); dragging.index = index; selectPoint(card, index); e.preventDefault(); }, true);
-  window.addEventListener("pointermove", e => { if (!dragging || dragging.pointerId !== e.pointerId) return; const index = indexAtPointer(dragging.svg, e.clientX); if (index !== dragging.index) { dragging.index = index; selectPoint(dragging.card, index); } e.preventDefault(); }, true);
-  window.addEventListener("pointerup", e => { if (!dragging || dragging.pointerId !== e.pointerId) return; dragging.svg.releasePointerCapture?.(e.pointerId); dragging = null; }, true);
+  window.addEventListener("pointerdown", e => {
+    const svg = e.target.closest?.(".market-card svg"); if (!svg || e.button > 0) return;
+    dragging = { pointerId: e.pointerId, svg, card: svg.closest(".market-card"), startX: e.clientX, startY: e.clientY, index: -1, horizontal: false };
+  }, true);
+  window.addEventListener("pointermove", e => {
+    if (!dragging || dragging.pointerId !== e.pointerId) return;
+    const dx = e.clientX - dragging.startX, dy = e.clientY - dragging.startY;
+    if (!dragging.horizontal) {
+      if (Math.abs(dy) > Math.abs(dx) + 4) { dragging = null; return; }
+      if (Math.abs(dx) <= Math.abs(dy) + 4) return;
+      dragging.horizontal = true; dragging.svg.setPointerCapture?.(e.pointerId);
+    }
+    const index = indexAtPointer(dragging.svg, e.clientX);
+    if (index !== dragging.index) { dragging.index = index; selectPoint(dragging.card, index); }
+    e.preventDefault();
+  }, true);
+  window.addEventListener("pointerup", e => { if (!dragging || dragging.pointerId !== e.pointerId) return; if (dragging.horizontal) dragging.svg.releasePointerCapture?.(e.pointerId); dragging = null; }, true);
   window.addEventListener("pointercancel", () => { dragging = null; }, true);
   window.addEventListener("click", e => { const s = e.target.closest?.("[data-grade-surface]"); if (!s) return; e.preventDefault(); e.stopImmediatePropagation(); selectPoint(s.closest(".market-card"), indexAtPointer(s.ownerSVGElement, e.clientX)); }, true);
   const prepare = () => document.querySelectorAll(".market-card").forEach(card => { if (prepared.has(card)) return; prepared.add(card); const active = card.querySelector("[data-grade-value].active") || card.querySelector('[data-grade-value][data-value="특"]'); if (active) selectGrade(active); });
