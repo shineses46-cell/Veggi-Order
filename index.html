@@ -12,12 +12,12 @@
   </style>
   <style>
     /* 큰 글꼴과 특 없음 상태도 등급 버튼의 위치·모양을 동일하게 유지한다. */
-    .market-top .grade-picker{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;flex:0 0 150px!important;width:150px!important;max-width:100%;margin-left:auto;overflow:hidden!important;border-radius:9px!important}
+    .market-top{flex-wrap:nowrap!important;align-items:center!important}.market-top>div:first-child{flex:1 1 0!important;min-width:0!important}.market-top .grade-picker{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;flex:0 0 132px!important;width:132px!important;max-width:100%;margin-left:auto;overflow:hidden!important;border-radius:9px!important}
     .market-top .grade-picker button,.market-top .grade-picker button.unavailable{min-width:0!important;padding:0 4px!important;border-radius:0!important;white-space:nowrap!important}
     .market-top .grade-picker button:first-child{border-radius:8px 0 0 8px!important}.market-top .grade-picker button:last-child{border-radius:0 8px 8px 0!important}
     /* 큰 글꼴에서는 이력 상세를 화면 중앙에 두고 모달 내부만 스크롤한다. */
     .modal-backdrop{align-items:center;padding:12px;overflow:auto}.modal{width:min(100%,760px);max-height:calc(100dvh - 24px);margin:auto;border-radius:20px;padding-top:19px}
-    @media(max-width:380px){.market-top .grade-picker{flex-basis:150px!important;width:150px!important}.modal-backdrop{padding:8px}.modal{max-height:calc(100dvh - 16px)}}
+    @media(max-width:380px){.market-top .grade-picker{flex-basis:132px!important;width:132px!important}.modal-backdrop{padding:8px}.modal{max-height:calc(100dvh - 16px)}}
   </style>
 </head>
 <body>
@@ -36,6 +36,6 @@
     <button data-view="inventoryView" class="active"><b>▦</b>재고</button><button data-view="ordersView"><b>▤</b>발주</button><button data-view="marketView"><b>₩</b>시세</button><button data-view="historyView"><b>◫</b>이력</button><button data-view="settingsView"><b>⚙</b>설정</button>
   </nav>
   <div id="modalRoot"></div><div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="market-data.js?v=3"></script><script src="app.js?v=46"></script><script src="grade-market.js?v=20"></script><script src="inventory-order-enhancements.js?v=3"></script>
+  <script src="market-data.js?v=3"></script><script src="app.js?v=47"></script><script src="grade-market.js?v=20"></script><script src="inventory-order-enhancements.js?v=3"></script>
 </body>
 </html>
