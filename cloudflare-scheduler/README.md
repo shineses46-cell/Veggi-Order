@@ -30,12 +30,10 @@ Cloudflare Dashboard → Workers & Pages → `veggi-order-market-scheduler` → 
 1. Cloudflare Dashboard에서 Workers & Pages → Create → Worker를 선택합니다.
 2. 이름을 `veggi-order-market-scheduler`로 지정합니다.
 3. Worker 편집기에 `src/index.js` 내용을 붙여넣어 배포합니다.
-4. Settings → Triggers → Cron Triggers에 아래 두 개를 추가합니다. Cloudflare Cron은 UTC 기준이며, 합치면 한국시간 06:17~17:17 매시 17분입니다.
-   - `17 21-23 * * *`
-   - `17 0-8 * * *`
+4. Settings → Triggers → Cron Triggers에 `17 * * * *`를 추가합니다. Cloudflare Cron은 UTC 기준이며, 한국시간 기준으로도 매시 17분(00:17~23:17) 실행됩니다.
 5. 위 Secret과 일반 Variable을 추가한 뒤, Cron Trigger의 Test 버튼으로 한 번 실행합니다.
 6. GitHub Actions에서 `workflow_dispatch` 실행 기록이 생기고, `market/availability-log.json`이 갱신되는지 확인합니다.
 
 ## 운영 전환
 
-Cloudflare 테스트가 성공하면 GitHub 내부 `schedule`은 제거합니다. 일주일 동안 갱신 시간 기록을 모은 다음, 가장 이른 안정 수집 시각과 백업 시각만 남겨 호출 수를 줄입니다.
+Cloudflare 테스트가 성공하면 GitHub 내부 `schedule`은 제거합니다. 저녁 경매까지 포함해 일주일 동안 24시간 기록을 모은 다음, 가장 이른 안정 수집 시각과 백업 시각만 남겨 호출 수를 줄입니다.

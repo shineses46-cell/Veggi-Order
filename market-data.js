@@ -13,7 +13,7 @@
   };
   const statusFor = (date, log) => {
     const checks = log.filter(entry => entry.date === date);
-    const allEmpty = checks.length >= 12 && checks.every(entry => Number(entry.itemsWithRows) === 0);
+    const allEmpty = checks.length >= 24 && checks.every(entry => Number(entry.itemsWithRows) === 0);
     const redCalendarDay = isRedCalendarDay(date);
     return { redCalendarDay, checks: checks.length, allEmpty, holidayClosed: redCalendarDay && allEmpty, holidayChecking: redCalendarDay && checks.length > 0 && !allEmpty, today: date === koreaYmd() };
   };
