@@ -14,8 +14,10 @@
   const statusFor = (date, log) => {
     const checks = log.filter(entry => entry.date === date);
     const allEmpty = checks.length >= 24 && checks.every(entry => Number(entry.itemsWithRows) === 0);
+    // 9월 25일은 24시간 실험 전의 추석 휴장일이라, 확보된 12회 0건 기록만 예외적으로 확정한다.
+    const chuseokLegacyEmpty = date === "20260925" && checks.length >= 12 && checks.every(entry => Number(entry.itemsWithRows) === 0);
     const redCalendarDay = isRedCalendarDay(date);
-    return { redCalendarDay, checks: checks.length, allEmpty, holidayClosed: redCalendarDay && allEmpty, holidayChecking: redCalendarDay && checks.length > 0 && !allEmpty, today: date === koreaYmd() };
+    return { redCalendarDay, checks: checks.length, allEmpty: allEmpty || chuseokLegacyEmpty, holidayClosed: redCalendarDay && (allEmpty || chuseokLegacyEmpty), holidayChecking: redCalendarDay && checks.length > 0 && !(allEmpty || chuseokLegacyEmpty), today: date === koreaYmd() };
   };
   window.VeggiMarketHistoryReady = Promise.all([history, availability]);
   window.VeggiMarketHistoryReady.then(([snapshots]) => {
