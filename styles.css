@@ -7,3 +7,6 @@
 /* 입고 취소의 빠른 수량은 입력칸 바로 왼쪽에 둔다. */
 .return-row{grid-template-columns:minmax(0,1fr) 174px}.return-control{display:grid;grid-template-columns:minmax(0,1fr) 62px;gap:5px;align-items:stretch}.return-control input{grid-column:2;grid-row:1;width:100%;min-width:0}.return-slots{grid-column:1;grid-row:1;gap:3px}.return-slots button{min-height:38px;font-size:10px}
 @media(max-width:380px){.return-row{grid-template-columns:minmax(0,1fr) 164px;gap:5px;padding:8px}.return-control{grid-template-columns:minmax(0,1fr) 58px}}
+
+/* 입고 취소 품목이 많아도 실행 버튼은 모달 하단에 남긴다. */
+.receipt-actions{display:flex;gap:7px;flex-wrap:wrap}.receipt-actions button{flex:1 1 132px}.return-modal{display:flex;flex-direction:column;overflow:hidden}.return-modal .return-list{flex:1 1 auto;min-height:0;overflow:auto;padding:2px 2px 4px}.return-footer{flex:none;padding-top:11px;background:#fff;border-top:1px solid #edf1ee}.return-footer .return-confirm{width:100%}
