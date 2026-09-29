@@ -45,6 +45,17 @@ async function refreshLiveMarket(force=false,onlyId=null){if(marketLoading)retur
 function market(){state.market.selected??={};const status=marketLoading?`시세를 불러오는 중입니다. ${marketProgress.done}/${marketProgress.total}`:`마지막 시세 수집: ${marketFetchLabel()}`;const loadingCards=orderItems().map(x=>`<article class="card market-loading-card"><h3>${esc(x.name)}</h3><p>가락시장 시세를 불러오는 중…</p><div class="market-loading-graph" aria-label="${esc(x.name)} 시세 로딩 중"></div></article>`).join(""),cards=marketLoading?loadingCards:orderItems().map(chart).join("");$("#marketView").innerHTML=`<div class="section-head"><div><h2>가락시장 시세</h2><p>가락시장 도매시장 법인거래 기준</p></div><button class="secondary" id="refreshMarket" ${marketLoading?"disabled":""}>${marketLoading?"불러오는 중":"시세 새로고침"}</button></div><div class="period-switch"><button data-period="7" class="${state.market.period===7?"active":""}">최근 7일</button><button data-period="30" class="${state.market.period===30?"active":""}">최근 30일</button></div><p class="notice">${status}</p><section class="market-list">${cards}</section>`;if(!marketLoading)bindMarketGradeButtons();const autoKey=`${state.market.period}-${key(new Date())}`;if(!marketLoading&&marketAutoKey!==autoKey){marketAutoKey=autoKey;setTimeout(()=>refreshLiveMarket(),0)}}
 const renderMarketWithEvent=market;market=function(...args){const result=renderMarketWithEvent(...args);window.dispatchEvent(new Event("veggi-market-rendered"));return result};
 
+/*
+  시세 카드의 실제 SVG는 grade-market.js가 정적 이력 JSON을 읽은 뒤 그린다.
+  이전 구현은 그 사이 seed 예시 가격으로 차트를 먼저 그려, 새로고침·7/30일
+  전환 때 가짜 그래프가 잠깐 보였다. 이 초기 골격은 데이터와 무관한 로딩
+  상태만 제공하고, 실제 가격선은 정적 이력이 준비된 경우에만 표시한다.
+*/
+function chart(x){
+  const days=state.market.period,selected=grade(x),gradeButtons=["특","상","중"].map(value=>`<button type="button" data-grade-value="${x.id}" data-value="${value}" class="${selected===value?"active":""}">${value==="중"?"보통":value}</button>`).join(""),orderIndex=state.market.order.indexOf(x.id);
+  return `<article class="card market-card" data-market-id="${x.id}"><div class="market-top"><div><h3>${esc(x.name)}</h3><p>${esc(candidates[x.id]||x.name)} · 실제 시세 준비 중</p></div><div class="grade-picker" role="group" aria-label="${esc(x.name)} 등급">${gradeButtons}</div></div><div class="market-price">시세 불러오는 중<small> / 실제 경락가</small></div><p class="market-clock">🕘 저장된 가락시장 시세를 확인하는 중입니다.</p><div class="chart-scroll"><svg viewBox="0 0 350 190" style="width:100%" role="img" aria-label="${esc(x.name)} ${days}일 시세"><text x="175" y="96" text-anchor="middle" class="chart-axis">실제 시세를 불러오는 중…</text></svg></div><p class="market-advice">그래프는 실제 수집 이력이 준비된 뒤 표시됩니다.</p><div class="sort-controls"><button data-move-market="${x.id}" data-dir="-" ${orderIndex===0?"disabled":""}>▲ 위로</button><button data-move-market="${x.id}" data-dir="+" ${orderIndex===state.market.order.length-1?"disabled":""}>▼ 아래로</button></div></article>`
+}
+
 const FONT_SCALE_KEY="veggi-order-font-scale";
 function fontScale(){return Number(localStorage.getItem(FONT_SCALE_KEY)||1)}
 function applyFontScale(){document.documentElement.style.setProperty("--font-scale",String(fontScale()));document.body.style.zoom=String(fontScale())}
