@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-09-30T23:17:50.749Z",
+  "collectedAt": "2026-10-01T00:17:48.969Z",
   "date": "20261001",
   "items": {
     "lettuce-green": {
@@ -242,7 +242,7 @@
           "J_SAME_P": "       5,954",
           "J_SAME_R": "         100.7",
           "J_SAME_MARK_P": "6,330",
-          "ROWNO": 6,
+          "ROWNO": 5,
           "FLUC": "           0",
           "AV_P": "       5,997",
           "U_NAME": "6 개"
@@ -290,7 +290,7 @@
           "J_SAME_P": "      10,840",
           "J_SAME_R": "          93.5",
           "J_SAME_MARK_P": "15,664",
-          "ROWNO": 5,
+          "ROWNO": 6,
           "FLUC": "        -837",
           "AV_P": "      10,135",
           "U_NAME": "12 개"
