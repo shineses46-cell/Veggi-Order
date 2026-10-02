@@ -21400,7 +21400,7 @@
     }
   },
   {
-    "collectedAt": "2026-10-02T13:17:46.711Z",
+    "collectedAt": "2026-10-02T14:17:48.351Z",
     "date": "20261002",
     "items": {
       "lettuce-green": {
@@ -21643,7 +21643,7 @@
             "J_SAME_P": "       5,714",
             "J_SAME_R": "         105.0",
             "J_SAME_MARK_P": "6,330",
-            "ROWNO": 6,
+            "ROWNO": 5,
             "FLUC": "           0",
             "AV_P": "       5,997",
             "U_NAME": "6 개"
@@ -21691,7 +21691,7 @@
             "J_SAME_P": "      10,659",
             "J_SAME_R": "          83.1",
             "J_SAME_MARK_P": "10,776",
-            "ROWNO": 5,
+            "ROWNO": 6,
             "FLUC": "      -1,276",
             "AV_P": "       8,859",
             "U_NAME": "12 개"
