@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-10-05T22:17:46.652Z",
+  "collectedAt": "2026-10-05T23:17:49.328Z",
   "date": "20261006",
   "items": {
     "lettuce-green": {
@@ -396,11 +396,11 @@
           "MI_P": "      24,000",
           "J_SAME_MARK_R": null,
           "J_SAME_P": "      30,625",
-          "J_SAME_R": "          91.2",
+          "J_SAME_R": "          91.1",
           "J_SAME_MARK_P": null,
           "ROWNO": 3,
-          "FLUC": "      -6,978",
-          "AV_P": "      27,923",
+          "FLUC": "      -6,989",
+          "AV_P": "      27,912",
           "U_NAME": "10 kg상자"
         },
         {
