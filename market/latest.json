@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-10-07T22:17:48.284Z",
+  "collectedAt": "2026-10-07T23:17:48.913Z",
   "date": "20261008",
   "items": {
     "lettuce-green": {
@@ -210,7 +210,7 @@
           "J_SAME_P": "       7,000",
           "J_SAME_R": "         100.0",
           "J_SAME_MARK_P": null,
-          "ROWNO": 2,
+          "ROWNO": 1,
           "FLUC": "           0",
           "AV_P": "       7,000",
           "U_NAME": "6 개"
@@ -226,7 +226,7 @@
           "J_SAME_P": "       6,620",
           "J_SAME_R": "         100.0",
           "J_SAME_MARK_P": null,
-          "ROWNO": 3,
+          "ROWNO": 4,
           "FLUC": "           0",
           "AV_P": "       6,620",
           "U_NAME": "6 개"
@@ -242,7 +242,7 @@
           "J_SAME_P": "       5,997",
           "J_SAME_R": "         100.0",
           "J_SAME_MARK_P": null,
-          "ROWNO": 5,
+          "ROWNO": 6,
           "FLUC": "           0",
           "AV_P": "       5,997",
           "U_NAME": "6 개"
@@ -258,7 +258,7 @@
           "J_SAME_P": "      13,240",
           "J_SAME_R": "          87.8",
           "J_SAME_MARK_P": null,
-          "ROWNO": 1,
+          "ROWNO": 2,
           "FLUC": "          47",
           "AV_P": "      11,629",
           "U_NAME": "12 개"
@@ -274,7 +274,7 @@
           "J_SAME_P": "      11,946",
           "J_SAME_R": "          87.3",
           "J_SAME_MARK_P": null,
-          "ROWNO": 4,
+          "ROWNO": 3,
           "FLUC": "          80",
           "AV_P": "      10,426",
           "U_NAME": "12 개"
@@ -290,7 +290,7 @@
           "J_SAME_P": "       8,541",
           "J_SAME_R": "          77.4",
           "J_SAME_MARK_P": null,
-          "ROWNO": 6,
+          "ROWNO": 5,
           "FLUC": "        -160",
           "AV_P": "       6,615",
           "U_NAME": "12 개"
