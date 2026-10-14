@@ -5,19 +5,27 @@
   const history = readJson("./market/history.json");
   const availability = readJson("./market/availability-log.json");
   const koreaYmd = () => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date()).replaceAll("-", "");
-  // 매년 공식 달력 기준으로 갱신한다. 일요일은 매년 공통인 달력상 빨간 날이다.
+  // 매년 공식 달력 기준으로 갱신한다. 토·일은 가락시장 정기 휴장 후보로 함께 본다.
   const redDates = new Set(["20260101", "20260216", "20260217", "20260218", "20260301", "20260302", "20260505", "20260524", "20260525", "20260603", "20260606", "20260815", "20260817", "20260924", "20260925", "20260926", "20261003", "20261005", "20261009", "20261225"]);
-  const isRedCalendarDay = date => {
+  const calendarDay = date => {
     const iso = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`;
-    return redDates.has(date) || new Date(`${iso}T12:00:00+09:00`).getDay() === 0;
+    return new Date(`${iso}T12:00:00+09:00`).getUTCDay();
+  };
+  const regularClosureInfo = date => {
+    const day = calendarDay(date);
+    if (day === 6) return { candidate: true, label: "토요일 정기 휴장" };
+    if (day === 0) return { candidate: true, label: "일요일 정기 휴장" };
+    if (redDates.has(date)) return { candidate: true, label: "공휴일 휴장" };
+    return { candidate: false, label: "" };
   };
   const statusFor = (date, log) => {
     const checks = log.filter(entry => entry.date === date);
     const allEmpty = checks.length >= 24 && checks.every(entry => Number(entry.itemsWithRows) === 0);
     // 9월 25일은 24시간 실험 전의 추석 휴장일이라, 확보된 12회 0건 기록만 예외적으로 확정한다.
     const chuseokLegacyEmpty = date === "20260925" && checks.length >= 12 && checks.every(entry => Number(entry.itemsWithRows) === 0);
-    const redCalendarDay = isRedCalendarDay(date);
-    return { redCalendarDay, checks: checks.length, allEmpty: allEmpty || chuseokLegacyEmpty, holidayClosed: redCalendarDay && (allEmpty || chuseokLegacyEmpty), holidayChecking: redCalendarDay && checks.length > 0 && !(allEmpty || chuseokLegacyEmpty), today: date === koreaYmd() };
+    const closure = regularClosureInfo(date);
+    const marketClosed = closure.candidate && (allEmpty || chuseokLegacyEmpty);
+    return { redCalendarDay: closure.candidate, regularClosureDay: closure.candidate, closureLabel: closure.label, checks: checks.length, allEmpty: allEmpty || chuseokLegacyEmpty, marketClosed, holidayClosed: marketClosed, holidayChecking: closure.candidate && checks.length > 0 && !marketClosed, today: date === koreaYmd() };
   };
   window.VeggiMarketHistoryReady = Promise.all([history, availability]);
   window.VeggiMarketHistoryReady.then(([snapshots]) => {
