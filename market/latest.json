@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-10-15T00:17:26.863Z",
+  "collectedAt": "2026-10-15T01:17:25.332Z",
   "date": "20261015",
   "items": {
     "lettuce-green": {
@@ -210,7 +210,7 @@
           "J_SAME_P": "       7,000",
           "J_SAME_R": "          71.4",
           "J_SAME_MARK_P": null,
-          "ROWNO": 1,
+          "ROWNO": 2,
           "FLUC": "      -2,000",
           "AV_P": "       5,000",
           "U_NAME": "6 개"
@@ -242,7 +242,7 @@
           "J_SAME_P": "       5,997",
           "J_SAME_R": "          60.2",
           "J_SAME_MARK_P": null,
-          "ROWNO": 6,
+          "ROWNO": 5,
           "FLUC": "      -2,389",
           "AV_P": "       3,608",
           "U_NAME": "6 개"
@@ -258,7 +258,7 @@
           "J_SAME_P": "      15,601",
           "J_SAME_R": "          58.8",
           "J_SAME_MARK_P": "39,824",
-          "ROWNO": 2,
+          "ROWNO": 1,
           "FLUC": "      -3,562",
           "AV_P": "       9,169",
           "U_NAME": "12 개"
@@ -290,7 +290,7 @@
           "J_SAME_P": "       8,667",
           "J_SAME_R": "          64.2",
           "J_SAME_MARK_P": "24,667",
-          "ROWNO": 5,
+          "ROWNO": 6,
           "FLUC": "      -2,039",
           "AV_P": "       5,565",
           "U_NAME": "12 개"
