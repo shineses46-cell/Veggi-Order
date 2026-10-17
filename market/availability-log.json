@@ -1,12 +1,6 @@
 [
   {
     "date": "20260926",
-    "checkedAt": "2026-09-26T04:17:37.940Z",
-    "itemsWithRows": 0,
-    "itemCount": 8
-  },
-  {
-    "date": "20260926",
     "checkedAt": "2026-09-26T05:17:38.872Z",
     "itemsWithRows": 0,
     "itemCount": 8
@@ -2996,6 +2990,12 @@
   {
     "date": "20261017",
     "checkedAt": "2026-10-17T01:18:07.881Z",
+    "itemsWithRows": 8,
+    "itemCount": 8
+  },
+  {
+    "date": "20261017",
+    "checkedAt": "2026-10-17T02:17:24.516Z",
     "itemsWithRows": 8,
     "itemCount": 8
   }
