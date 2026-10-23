@@ -84,7 +84,8 @@ for (const snapshot of snapshots) {
   existing.set(snapshot.date, before ? { ...before, collectedAt: snapshot.collectedAt, items: { ...before.items, ...items } } : snapshot);
 }
 history = [...existing.values()].sort((a, b) => a.date.localeCompare(b.date)).slice(-45);
-availability = [...availability, ...checks].slice(-500);
+// 30일 차트의 휴장 판정 근거가 사라지지 않도록 약 62일치(24회/일)를 보관한다.
+availability = [...availability, ...checks].slice(-1500);
 fs.writeFileSync('market/history.json', `${JSON.stringify(history, null, 2)}\n`);
 fs.writeFileSync('market/latest.json', `${JSON.stringify(history.at(-1) || {}, null, 2)}\n`);
 fs.writeFileSync('market/availability-log.json', `${JSON.stringify(availability, null, 2)}\n`);
