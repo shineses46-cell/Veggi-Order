@@ -28520,7 +28520,7 @@
     }
   },
   {
-    "collectedAt": "2026-11-08T19:18:05.572Z",
+    "collectedAt": "2026-11-08T20:18:05.657Z",
     "date": "20261109",
     "items": {
       "lettuce-green": {
@@ -28731,7 +28731,7 @@
             "J_SAME_P": "       4,202",
             "J_SAME_R": "         100.0",
             "J_SAME_MARK_P": null,
-            "ROWNO": 2,
+            "ROWNO": 1,
             "FLUC": "       4,202",
             "AV_P": "       4,202",
             "U_NAME": "6 개"
@@ -28747,7 +28747,7 @@
             "J_SAME_P": "       3,700",
             "J_SAME_R": "         100.0",
             "J_SAME_MARK_P": null,
-            "ROWNO": 3,
+            "ROWNO": 4,
             "FLUC": "       3,700",
             "AV_P": "       3,700",
             "U_NAME": "6 개"
@@ -28779,7 +28779,7 @@
             "J_SAME_P": "      12,499",
             "J_SAME_R": "         132.6",
             "J_SAME_MARK_P": "74,758",
-            "ROWNO": 1,
+            "ROWNO": 2,
             "FLUC": "      16,573",
             "AV_P": "      16,573",
             "U_NAME": "12 개"
@@ -28795,7 +28795,7 @@
             "J_SAME_P": "       9,990",
             "J_SAME_R": "         132.7",
             "J_SAME_MARK_P": "59,463",
-            "ROWNO": 4,
+            "ROWNO": 3,
             "FLUC": "      13,252",
             "AV_P": "      13,252",
             "U_NAME": "12 개"
