@@ -1,5 +1,5 @@
 {
-  "collectedAt": "2026-11-23T19:18:06.689Z",
+  "collectedAt": "2026-11-23T20:18:06.506Z",
   "date": "20261124",
   "items": {
     "lettuce-green": {
@@ -226,7 +226,7 @@
           "J_SAME_P": "       3,700",
           "J_SAME_R": "         100.0",
           "J_SAME_MARK_P": null,
-          "ROWNO": 4,
+          "ROWNO": 3,
           "FLUC": "           0",
           "AV_P": "       3,700",
           "U_NAME": "6 개"
@@ -274,7 +274,7 @@
           "J_SAME_P": "      13,840",
           "J_SAME_R": "          98.2",
           "J_SAME_MARK_P": "38,136",
-          "ROWNO": 3,
+          "ROWNO": 4,
           "FLUC": "         768",
           "AV_P": "      13,592",
           "U_NAME": "12 개"
@@ -312,7 +312,7 @@
           "J_SAME_P": "       7,984",
           "J_SAME_R": "          84.0",
           "J_SAME_MARK_P": "32,981",
-          "ROWNO": 2,
+          "ROWNO": 1,
           "FLUC": "        -289",
           "AV_P": "       6,706",
           "U_NAME": "8 kg상자"
@@ -328,7 +328,7 @@
           "J_SAME_P": "       6,982",
           "J_SAME_R": "          83.4",
           "J_SAME_MARK_P": "27,683",
-          "ROWNO": 4,
+          "ROWNO": 3,
           "FLUC": "        -439",
           "AV_P": "       5,826",
           "U_NAME": "8 kg상자"
@@ -360,7 +360,7 @@
           "J_SAME_P": "      10,682",
           "J_SAME_R": "         100.0",
           "J_SAME_MARK_P": null,
-          "ROWNO": 1,
+          "ROWNO": 2,
           "FLUC": "           0",
           "AV_P": "      10,682",
           "U_NAME": "16 kg상자"
@@ -376,7 +376,7 @@
           "J_SAME_P": "       7,570",
           "J_SAME_R": "         100.0",
           "J_SAME_MARK_P": null,
-          "ROWNO": 3,
+          "ROWNO": 4,
           "FLUC": "           0",
           "AV_P": "       7,570",
           "U_NAME": "16 kg상자"
