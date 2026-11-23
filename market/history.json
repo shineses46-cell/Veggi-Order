@@ -29176,7 +29176,7 @@
     }
   },
   {
-    "collectedAt": "2026-11-23T04:17:57.093Z",
+    "collectedAt": "2026-11-23T05:17:57.607Z",
     "date": "20261123",
     "items": {
       "lettuce-green": {
@@ -29505,7 +29505,7 @@
             "J_SAME_P": "       7,396",
             "J_SAME_R": "          84.7",
             "J_SAME_MARK_P": "31,508",
-            "ROWNO": 3,
+            "ROWNO": 4,
             "FLUC": "         991",
             "AV_P": "       6,265",
             "U_NAME": "8 kg상자"
@@ -29553,7 +29553,7 @@
             "J_SAME_P": "       7,570",
             "J_SAME_R": "         100.0",
             "J_SAME_MARK_P": null,
-            "ROWNO": 4,
+            "ROWNO": 3,
             "FLUC": "           0",
             "AV_P": "       7,570",
             "U_NAME": "16 kg상자"
